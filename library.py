@@ -26,3 +26,13 @@ class Library:
                 book.is_borrowed = True
                 return
         raise ValueError("Book not found in the library.")
+    
+    # Implement Returning Books
+    def return_book(self, isbn):
+        for book in self.books:
+            if book.isbn == isbn:
+                if not book.is_borrowed:
+                    raise ValueError("Book is not borrowed.")
+                book.is_borrowed = False
+                return
+        raise ValueError("Book not found in the library.")
