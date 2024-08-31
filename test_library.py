@@ -19,5 +19,19 @@ class TestLibrary(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.library.add_book(book)  # Adding the same book again should raise an error
 
+    # Tests for Borrowing Books
+    def test_borrow_book(self):
+        book = Book(isbn="1234567890", title="The Guide", author="RK Narayan", year=1958)
+        self.library.add_book(book)
+        self.library.borrow_book(book.isbn)
+        self.assertTrue(book.is_borrowed)
+
+    def test_borrow_unavailable_book(self):
+        book = Book(isbn="1234567890", title="The Guide", author="RK Narayan", year=1958)
+        self.library.add_book(book)
+        self.library.borrow_book(book.isbn)
+        with self.assertRaises(ValueError):
+            self.library.borrow_book(book.isbn)  # Borrowing again should raise an error
+
 if __name__ == "__main__":
     unittest.main()
