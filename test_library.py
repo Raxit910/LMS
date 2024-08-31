@@ -47,5 +47,16 @@ class TestLibrary(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.library.return_book(book.isbn)  # Returning an unborrowed book should raise an error
 
+    # Tests for Viewing Available Books
+    def test_view_available_books(self):
+        book1 = Book(isbn="1234567890", title="The Guide", author="RK Narayan", year=1958)
+        book2 = Book(isbn="0987654321", title="New Book", author="Jarry", year=2023)
+        self.library.add_book(book1)
+        self.library.add_book(book2)
+        self.library.borrow_book(book1.isbn)
+        available_books = self.library.view_available_books()
+        self.assertIn(book2, available_books)
+        self.assertNotIn(book1, available_books)
+
 if __name__ == "__main__":
     unittest.main()
