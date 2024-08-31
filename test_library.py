@@ -33,5 +33,19 @@ class TestLibrary(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.library.borrow_book(book.isbn)  # Borrowing again should raise an error
 
+    # Tests for Returning Books
+    def test_return_book(self):
+        book = Book(isbn="1234567890", title="The Guide", author="RK Narayan", year=1958)
+        self.library.add_book(book)
+        self.library.borrow_book(book.isbn)
+        self.library.return_book(book.isbn)
+        self.assertFalse(book.is_borrowed)
+
+    def test_return_unborrowed_book(self):
+        book = Book(isbn="1234567890", title="The Guide", author="RK Narayan", year=1958)
+        self.library.add_book(book)
+        with self.assertRaises(ValueError):
+            self.library.return_book(book.isbn)  # Returning an unborrowed book should raise an error
+
 if __name__ == "__main__":
     unittest.main()
